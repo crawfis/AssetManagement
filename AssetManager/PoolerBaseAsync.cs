@@ -28,9 +28,13 @@ namespace CrawfisSofware.AssetManagement
             {
                 instance = pool.Dequeue();
             }
-            _allocatedAssets.Add(instance, name);
-            ReinitializePoolInstance(instance);
-            return instance;
+            if (instance != null)
+            {
+                _allocatedAssets.Add(instance, name);
+                ReinitializePoolInstance(instance);
+                return instance;
+            }
+            return null;
         }
 
         public Task ReleaseAsync(T poolObject)

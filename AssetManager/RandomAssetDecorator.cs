@@ -34,6 +34,7 @@ namespace CrawfisSofware.AssetManagement
 
         public override async Task Initialize()
         {
+            await _assetProvider.Initialize();
             _assetPrefabs = _assetProvider.AvailableAssets().ToList();
         }
     }
