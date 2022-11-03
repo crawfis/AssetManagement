@@ -55,6 +55,7 @@ namespace CrawfisSofware.AssetManagement
 
         public override async Task Initialize()
         {
+            _assetNames.Clear();
             foreach (var asset in _assetPrefabs)
             {
                 _assetMapping[asset.name] = asset;

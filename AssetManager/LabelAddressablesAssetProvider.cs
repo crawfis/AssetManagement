@@ -74,6 +74,10 @@ namespace CrawfisSofware.AssetManagement
         public override async Task Initialize()
         {
             //await _addressableCatalog.WaitForCatalogToBeLoaded();
+            //Hack: Might be a better way to accomplish this by cloning the instance. We could have use the same "instance"
+            // with 2 Catalog's.
+            _assetNames.Clear();
+
             var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(GameObject));
             var resourceLocation = await handle.Task;
             if (resourceLocation != null)

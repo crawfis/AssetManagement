@@ -7,7 +7,7 @@ namespace CrawfisSoftware.AssetManagement
 {
     public abstract class ScriptableAssetProviderBase : ScriptableObject, IAssetManagerAsync<GameObject>
     {
-        [SerializeField] protected List<string> _assetNames = new List<string>();
+        protected List<string> _assetNames = new List<string>();
 
         public virtual IEnumerable<string> AvailableAssets()
         {
