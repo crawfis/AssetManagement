@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
     public class AutoRelease : MonoBehaviour
     {

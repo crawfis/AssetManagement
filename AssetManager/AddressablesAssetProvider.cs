@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceLocations;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
     /// Uses Addressables to create and release GameObjects.

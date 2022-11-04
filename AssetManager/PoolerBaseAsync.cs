@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
     /// Abstract base class for some asynchronous implementations of IPooler

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
     /// Provide a key->list of asset names mapping and select a random asset name from the list.

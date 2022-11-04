@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
     /// Given the underlying asset names, selects them in sequental order.

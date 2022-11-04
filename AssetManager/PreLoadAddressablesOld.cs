@@ -5,9 +5,9 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
-    internal class PreLoadAddressables : MonoBehaviour
+    internal class PreLoadAddressablesOld : MonoBehaviour
     {
         [SerializeField] private string _catalogURL = "Place URL.json here";
         [SerializeField] private List<string> _preloadedAssetNames = new List<string>();

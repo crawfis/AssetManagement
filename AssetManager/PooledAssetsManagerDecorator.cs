@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace CrawfisSofware.AssetManagement
+namespace CrawfisSoftware.AssetManagement
 {
     internal class PooledAssetsManagerDecorator : PoolerBaseAsync<GameObject>
     {
