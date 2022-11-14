@@ -5,17 +5,17 @@ using UnityEngine;
 namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
-    /// General IAssetManagerAsync for GameObjects that provides the underlying access (prefabs, addressables, multiple, single, etc.)
+    /// General IAssetManagerAsync for Sprites that provides the underlying access (local, addressables, multiple, single, etc.)
     /// with decorators that provide additional functionality (randomly select, sequentially select, use pooling, etc.)
     /// </summary>
-    [CreateAssetMenu(fileName = "AssetProvider", menuName = "CrawfisSoftware/AssetProviders/AddDecorators", order = 3)]
-    public class AssetProviderWithDecorators : DecoratorAssetProviderBase<GameObject>
+    [CreateAssetMenu(fileName = "AssetProvider", menuName = "CrawfisSoftware/AssetProviders/AddSpriteDecorators", order = 3)]
+    public class SpriteProviderWithDecorators : DecoratorAssetProviderBase<Sprite>
     {
-        [SerializeField] private ScriptableAssetProviderBase<GameObject> _baseAssetProvider;
-        [SerializeField] private List<DecoratorAssetProviderBase<GameObject>> _decorationAssetProviders = new List<DecoratorAssetProviderBase<GameObject>>();
+        [SerializeField] private ScriptableAssetProviderBase<Sprite> _baseAssetProvider;
+        [SerializeField] private List<DecoratorAssetProviderBase<Sprite>> _decorationAssetProviders = new List<DecoratorAssetProviderBase<Sprite>>();
 
         /// <inheritdoc/>
-        public override Task<GameObject> GetAsync(string name)
+        public override Task<Sprite> GetAsync(string name)
         {
             return _assetProvider.GetAsync(name);
         }

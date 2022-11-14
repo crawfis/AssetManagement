@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,13 +7,13 @@ namespace CrawfisSoftware.AssetManagement
     /// <summary>
     /// Instantiates and destroys a given prefab using the name of the prefab.
     /// </summary>
-    [CreateAssetMenu(fileName = "AssetProvider", menuName = "CrawfisSoftware/AssetProviders/AssetProvider", order = 1)]
-    public class PrefabAssetProvider : ScriptableAssetProviderBase<GameObject>
+    [CreateAssetMenu(fileName = "AssetProvider", menuName = "CrawfisSoftware/AssetProviders/AssetSpriteProvider", order = 1)]
+    public class SpriteAssetProvider : ScriptableAssetProviderBase<Sprite>
     {
-        [SerializeField] private List<GameObject> _assetPrefabs = new List<GameObject>();
+        [SerializeField] private List<Sprite> _assetPrefabs = new List<Sprite>();
 
-        private readonly List<GameObject> _allocatedAssets = new List<GameObject>();
-        private readonly Dictionary<string, GameObject> _assetMapping = new Dictionary<string, GameObject>();
+        private readonly List<Sprite> _allocatedAssets = new List<Sprite>();
+        private readonly Dictionary<string, Sprite> _assetMapping = new Dictionary<string, Sprite>();
 
         private async Task Awake()
         {
@@ -21,9 +21,9 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public override Task<GameObject> GetAsync(string name)
+        public override Task<Sprite> GetAsync(string name)
         {
-            if (_assetMapping.TryGetValue(name, out GameObject prefab))
+            if (_assetMapping.TryGetValue(name, out Sprite prefab))
             {
                 var asset = Instantiate(prefab);
                 _allocatedAssets.Add(asset);
@@ -46,7 +46,7 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public override Task ReleaseAsync(GameObject asset)
+        public override Task ReleaseAsync(Sprite asset)
         {
             if (_allocatedAssets.Remove(asset))
             {

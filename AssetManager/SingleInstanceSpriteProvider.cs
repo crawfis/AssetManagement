@@ -5,11 +5,11 @@ using UnityEngine;
 namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
-    /// Always returns the exact same GameObject.
+    /// Always returns the exact same Sprite.
     /// </summary>
-    public class SingleInstanceAssetProvider : MonoBehaviour, IAssetManagerAsync<GameObject>
+    public class SingleInstanceSpriteProvider : MonoBehaviour, IAssetManagerAsync<Sprite>
     {
-        [SerializeField] private GameObject _asset;
+        [SerializeField] private Sprite _asset;
 
         /// <inheritdoc/>
         public IEnumerable<string> AvailableAssets()
@@ -18,7 +18,7 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public Task<GameObject> GetAsync(string name)
+        public Task<Sprite> GetAsync(string name)
         {
             return Task.FromResult(_asset);
         }
@@ -36,7 +36,7 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public Task ReleaseAsync(GameObject asset)
+        public Task ReleaseAsync(Sprite asset)
         {
             return Task.CompletedTask;
         }

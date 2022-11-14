@@ -7,16 +7,16 @@ using UnityEngine.ResourceManagement.ResourceLocations;
 namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
-    /// Uses Addressables to create and release GameObjects.
+    /// Uses Addressables to create and release Sprites.
     /// </summary>
-    [CreateAssetMenu(fileName = "AssetProvider", menuName = "CrawfisSoftware/AssetProviders/LabelAddressableAssetProvider", order = 3)]
-    internal class LabelAddressablesAssetProvider : ScriptableAssetProviderBase<GameObject>
+    [CreateAssetMenu(fileName = "AssetProvider", menuName = "CrawfisSoftware/AssetProviders/LabelAddressableSpriteProvider", order = 3)]
+    internal class LabelAddressablesSpriteProvider : ScriptableAssetProviderBase<Sprite>
     {
         [SerializeField] private List<string> _labels = new List<string>();
         [SerializeField] private Addressables.MergeMode _mergeMode;
 
-        private List<GameObject> _allocatedAssets = new List<GameObject>();
-        //private readonly List<AsyncOperationHandle<GameObject>> _assetHandles = new List<AsyncOperationHandle<GameObject>>();
+        private List<Sprite> _allocatedAssets = new List<Sprite>();
+        //private readonly List<AsyncOperationHandle<Sprite>> _assetHandles = new List<AsyncOperationHandle<Sprite>>();
         private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
 
         private async void Awake()
@@ -25,15 +25,15 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public override async Task<GameObject> GetAsync(string name)
+        public override async Task<Sprite> GetAsync(string name)
         {
             if (_assetMapping.TryGetValue(name, out IResourceLocation prefab))
             {
-                var handle = Addressables.InstantiateAsync(prefab);
+                var handle = Addressables.LoadAssetAsync<Sprite>(prefab);
                 //_assetHandles.Add(handle);
                 var task = handle.Task;
                 await task;
-                GameObject asset = task.Result;
+                Sprite asset = task.Result;
                 _allocatedAssets.Add(asset);
                 return asset;
             }
@@ -47,12 +47,12 @@ namespace CrawfisSoftware.AssetManagement
             {
                 var asset = _allocatedAssets[i];
                 _allocatedAssets[i] = null;
-                Addressables.ReleaseInstance(asset);
+                Addressables.Release<Sprite>(asset);
             }
             _allocatedAssets.Clear();
             //foreach (var handle in this._assetHandles)
             //{
-            //    Addressables.Release<GameObject>(handle);
+            //    Addressables.Release<Sprite>(handle);
             //}
 
             //_assetHandles.Clear();
@@ -60,11 +60,11 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public override Task ReleaseAsync(GameObject asset)
+        public override Task ReleaseAsync(Sprite asset)
         {
             if (_allocatedAssets.Remove(asset))
             {
-                Addressables.ReleaseInstance(asset);
+                Addressables.Release<Sprite>(asset);
             }
             return Task.CompletedTask;
         }
@@ -77,7 +77,7 @@ namespace CrawfisSoftware.AssetManagement
             // with 2 Catalog's.
             _assetNames.Clear();
 
-            var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(GameObject));
+            var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(Sprite));
             var resourceLocation = await handle.Task;
             if (resourceLocation != null)
             {
