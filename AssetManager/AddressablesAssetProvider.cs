@@ -18,7 +18,7 @@ namespace CrawfisSoftware.AssetManagement
         //private readonly List<AsyncOperationHandle<GameObject>> _assetHandles = new List<AsyncOperationHandle<GameObject>>();
         private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
 
-        private async Task Awake()
+        private async Task Start()
         {
             await Initialize();
         }
