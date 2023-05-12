@@ -4,10 +4,7 @@
   "displayName": "Flexible AssetManagement",
   "description": "Interface-based encapsulation for instantiating, pooling, and controlling prefab creation with or without addressables",
   "unity": "2019.1",
-  "unityRelease": "0b5",
   "documentationUrl": "https://github.com/crawfis/AssetManagement",
-  "changelogUrl": "https://github.com/crawfis/AssetManagement/changelog.html",
-  "licensesUrl": "https://github.com/crawfis/AssetManagement/licensing.html",
  "keywords": [
     "Pooling",
     "Instantiate",
