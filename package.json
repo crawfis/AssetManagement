@@ -1,5 +1,5 @@
 {
-  "name": "com.CrawfisSoftware.AssetManagement",
+  "name": "com.crawfissoftware.assetmanagement",
   "version": "1.2.3",
   "displayName": "Flexible AssetManagement",
   "description": "Interface-based encapsulation for instantiating, pooling, and controlling prefab creation with or without addressables",
