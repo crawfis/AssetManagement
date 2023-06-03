@@ -77,7 +77,9 @@ namespace CrawfisSoftware.AssetManagement
             // with 2 Catalog's.
             _assetNames.Clear();
 
-            var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(GameObject));
+            // Bug: Unity was changing the enum to the wrong value. Hacking this to Intersection for now.
+            //var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(GameObject));
+            var handle = Addressables.LoadResourceLocationsAsync(_labels, Addressables.MergeMode.Intersection, typeof(GameObject));
             var resourceLocation = await handle.Task;
             if (resourceLocation != null)
             {
