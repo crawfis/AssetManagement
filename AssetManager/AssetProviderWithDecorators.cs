@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using UnityEngine;
 
 namespace CrawfisSoftware.AssetManagement
@@ -28,7 +29,7 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <summary>
-        /// Initializes the decorators and produces the correct instance that propogates through the decorators to the actual provider.
+        /// Initializes the decorators and produces the correct instance that propagates through the decorators to the actual provider.
         /// </summary>
         protected void AddDecorators()
         {
