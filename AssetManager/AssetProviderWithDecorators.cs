@@ -24,14 +24,23 @@ namespace CrawfisSoftware.AssetManagement
         /// <inheritdoc/>
         public override Task Initialize()
         {
-            AddDecorators();
+            AttachDecorators();
             return _assetProvider.Initialize();
         }
 
+        public void SetBaseAssetProvider(ScriptableAssetProviderBase<GameObject> baseAssetProvider)
+        {
+            _baseAssetProvider = baseAssetProvider;
+        }
+
+        public void AddDecorator(DecoratorAssetProviderBase<GameObject> decorator)
+        {
+            _decorationAssetProviders.Add(decorator);
+        }
         /// <summary>
         /// Initializes the decorators and produces the correct instance that propagates through the decorators to the actual provider.
         /// </summary>
-        protected void AddDecorators()
+        protected void AttachDecorators()
         {
             int count = _decorationAssetProviders.Count;
             var lastDecorator = _baseAssetProvider;
