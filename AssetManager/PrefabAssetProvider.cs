@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using UnityEngine;
 
 namespace CrawfisSoftware.AssetManagement
@@ -14,6 +15,12 @@ namespace CrawfisSoftware.AssetManagement
 
         private readonly List<GameObject> _allocatedAssets = new List<GameObject>();
         private readonly Dictionary<string, GameObject> _assetMapping = new Dictionary<string, GameObject>();
+
+        public void AddAsset(GameObject asset)
+        {
+            _assetPrefabs.Add(asset);
+            //Initialize();
+        }
 
         private async Task Awake()
         {

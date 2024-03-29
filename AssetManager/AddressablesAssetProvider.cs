@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace CrawfisSoftware.AssetManagement
 {
@@ -16,7 +16,8 @@ namespace CrawfisSoftware.AssetManagement
 
         private List<GameObject> _allocatedAssets = new List<GameObject>();
         //private readonly List<AsyncOperationHandle<GameObject>> _assetHandles = new List<AsyncOperationHandle<GameObject>>();
-        private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
+        //private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
+        private readonly Dictionary<string, GameObject> _assetMapping = new Dictionary<string, GameObject>();
 
         private async Task Start()
         {
@@ -26,27 +27,29 @@ namespace CrawfisSoftware.AssetManagement
         /// <inheritdoc/>
         public override async Task<GameObject> GetAsync(string name)
         {
-            if (_assetMapping.TryGetValue(name, out IResourceLocation prefab))
+            if (_assetMapping.TryGetValue(name, out GameObject prefab))
             {
-                var handle = Addressables.InstantiateAsync(prefab);
-                //_assetHandles.Add(handle);
-                var task = handle.Task;
-                await task;
-                GameObject asset = task.Result;
+                //var handle = Addressables.InstantiateAsync(prefab);
+                ////_assetHandles.Add(handle);
+                //var task = handle.Task;
+                //await task;
+                //GameObject asset = task.Result;
+                GameObject asset = Instantiate(prefab);
                 _allocatedAssets.Add(asset);
-                return asset;
+                return await Task.FromResult<GameObject>(asset);
             }
-            else
-            {
-                var handle = Addressables.InstantiateAsync(name);
-                //_assetHandles.Add(handle);
-                var task = handle.Task;
-                await task;
-                GameObject asset = task.Result;
-                _allocatedAssets.Add(asset);
-                return asset;
-            }
+            //else
+            //{
+            //    var handle = Addressables.InstantiateAsync(name);
+            //    //_assetHandles.Add(handle);
+            //    var task = handle.Task;
+            //    await task;
+            //    GameObject asset = task.Result;
+            //    _allocatedAssets.Add(asset);
+            //    return asset;
+            //}
             //return null;
+            return await Task.FromResult<GameObject>(null);
         }
 
         /// <inheritdoc/>
@@ -86,11 +89,11 @@ namespace CrawfisSoftware.AssetManagement
             // Todo: This does not seem to work.
             foreach (var asset in _assetNames)
             {
-                var handle = Addressables.LoadResourceLocationsAsync(asset, typeof(GameObject));
+                var handle = Addressables.LoadAssetAsync<GameObject>(asset);
                 var resourceLocation = await handle.Task;
-                if (resourceLocation != null && resourceLocation.Count > 0)
+                if (resourceLocation != null)
                 {
-                    _assetMapping[asset] = resourceLocation[0];
+                    _assetMapping[asset] = resourceLocation;
                 }
             }
         }

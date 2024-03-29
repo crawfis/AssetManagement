@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace CrawfisSoftware.AssetManagement
 {
@@ -17,7 +17,8 @@ namespace CrawfisSoftware.AssetManagement
 
         private List<Sprite> _allocatedAssets = new List<Sprite>();
         //private readonly List<AsyncOperationHandle<Sprite>> _assetHandles = new List<AsyncOperationHandle<Sprite>>();
-        private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
+        //private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
+        private readonly Dictionary<string, Sprite> _assetMapping = new Dictionary<string, Sprite>();
 
         private async void Awake()
         {
@@ -27,15 +28,16 @@ namespace CrawfisSoftware.AssetManagement
         /// <inheritdoc/>
         public override async Task<Sprite> GetAsync(string name)
         {
-            if (_assetMapping.TryGetValue(name, out IResourceLocation prefab))
+            if (_assetMapping.TryGetValue(name, out Sprite prefab))
             {
-                var handle = Addressables.LoadAssetAsync<Sprite>(prefab);
-                //_assetHandles.Add(handle);
-                var task = handle.Task;
-                await task;
-                Sprite asset = task.Result;
-                _allocatedAssets.Add(asset);
-                return asset;
+                //var handle = Addressables.LoadAssetAsync<Sprite>(prefab);
+                ////_assetHandles.Add(handle);
+                //var task = handle.Task;
+                //await task;
+                //Sprite asset = task.Result;
+                //_allocatedAssets.Add(asset);
+                var asset = Instantiate<Sprite>(prefab);
+                return await Task.FromResult(asset);
             }
             return null;
         }
@@ -79,14 +81,15 @@ namespace CrawfisSoftware.AssetManagement
 
             // Bug: Unity was changing the enum to the wrong value. Hacking this to Intersection for now.
             //var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(Sprite));
-            var handle = Addressables.LoadResourceLocationsAsync(_labels, Addressables.MergeMode.Intersection, typeof(Sprite));
+            //var handle = Addressables.LoadResourceLocationsAsync(_labels, Addressables.MergeMode.Intersection, typeof(Sprite));
+            var handle = Addressables.LoadAssetsAsync<Sprite>(_labels, (_) => { }, _mergeMode); // Addressables.MergeMode.Intersection);
             var resourceLocation = await handle.Task;
             if (resourceLocation != null)
             {
                 foreach (var location in resourceLocation)
                 {
-                    _assetMapping[location.PrimaryKey] = location;
-                    _assetNames.Add(location.PrimaryKey);
+                    _assetMapping[location.name] = location;
+                    _assetNames.Add(location.name);
                 }
             }
         }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace CrawfisSoftware.AssetManagement
 {
     /// <summary>
-    /// Abstract class for decorators ontop of the ScriptableAssetProviderBase. Handles the IAssetManagerAsync functions
+    /// Abstract class for decorators on top of the ScriptableAssetProviderBase. Handles the IAssetManagerAsync functions
     /// and contains the real asset provider.
     /// </summary>
     /// <typeparam name="T">The type of asset (currently GameObject or Sprite)</typeparam>

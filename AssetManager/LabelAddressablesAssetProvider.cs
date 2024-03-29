@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.ResourceLocations;
 
 namespace CrawfisSoftware.AssetManagement
 {
@@ -17,7 +17,7 @@ namespace CrawfisSoftware.AssetManagement
 
         private List<GameObject> _allocatedAssets = new List<GameObject>();
         //private readonly List<AsyncOperationHandle<GameObject>> _assetHandles = new List<AsyncOperationHandle<GameObject>>();
-        private readonly Dictionary<string, IResourceLocation> _assetMapping = new Dictionary<string, IResourceLocation>();
+        private readonly Dictionary<string, GameObject> _assetMapping = new Dictionary<string, GameObject>();
 
         private async void Awake()
         {
@@ -27,13 +27,14 @@ namespace CrawfisSoftware.AssetManagement
         /// <inheritdoc/>
         public override async Task<GameObject> GetAsync(string name)
         {
-            if (_assetMapping.TryGetValue(name, out IResourceLocation prefab))
+            if (_assetMapping.TryGetValue(name, out GameObject prefab))
             {
-                var handle = Addressables.InstantiateAsync(prefab);
-                //_assetHandles.Add(handle);
-                var task = handle.Task;
-                await task;
-                GameObject asset = task.Result;
+                //var handle = Addressables.InstantiateAsync(prefab);
+                ////_assetHandles.Add(handle);
+                //var task = handle.Task;
+                //await task;
+                //GameObject asset = task.Result;
+                GameObject asset = Instantiate<GameObject>(prefab);
                 _allocatedAssets.Add(asset);
                 return asset;
             }
@@ -47,7 +48,8 @@ namespace CrawfisSoftware.AssetManagement
             {
                 var asset = _allocatedAssets[i];
                 _allocatedAssets[i] = null;
-                Addressables.ReleaseInstance(asset);
+                //Addressables.ReleaseInstance(asset);
+                DestroyImmediate(asset);
             }
             _allocatedAssets.Clear();
             //foreach (var handle in this._assetHandles)
@@ -64,7 +66,8 @@ namespace CrawfisSoftware.AssetManagement
         {
             if (_allocatedAssets.Remove(asset))
             {
-                Addressables.ReleaseInstance(asset);
+                //Addressables.ReleaseInstance(asset);
+                DestroyImmediate(asset);
             }
             return Task.CompletedTask;
         }
@@ -79,14 +82,15 @@ namespace CrawfisSoftware.AssetManagement
 
             // Bug: Unity was changing the enum to the wrong value. Hacking this to Intersection for now.
             //var handle = Addressables.LoadResourceLocationsAsync(_labels, _mergeMode, typeof(GameObject));
-            var handle = Addressables.LoadResourceLocationsAsync(_labels, Addressables.MergeMode.Intersection, typeof(GameObject));
+            //var handle = Addressables.LoadResourceLocationsAsync(_labels, Addressables.MergeMode.Intersection, typeof(GameObject));
+            var handle = Addressables.LoadAssetsAsync<GameObject>(_labels, (_) => { }, _mergeMode); // Addressables.MergeMode.Intersection);
             var resourceLocation = await handle.Task;
             if (resourceLocation != null)
             {
                 foreach (var location in resourceLocation)
                 {
-                    _assetMapping[location.PrimaryKey] = location;
-                    _assetNames.Add(location.PrimaryKey);
+                    _assetMapping[location.name] = location;
+                    _assetNames.Add(location.name);
                 }
             }
         }
