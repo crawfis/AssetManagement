@@ -1,5 +1,5 @@
 {
-    "name": "NewAssembly",
+    "name": "com.crawfissoftware.AssetManagement",
     "rootNamespace": "CrawfisSoftware.AssetManagement",
     "references": [
         "GUID:9e24947de15b9834991c9d8411ea37cf",
