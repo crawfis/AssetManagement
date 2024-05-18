@@ -22,9 +22,9 @@ namespace CrawfisSoftware.AssetManagement
             //Initialize();
         }
 
-        private async Task Awake()
+        private Task Awake()
         {
-            await Initialize();
+            return Initialize();
         }
 
         /// <inheritdoc/>
@@ -63,7 +63,7 @@ namespace CrawfisSoftware.AssetManagement
         }
 
         /// <inheritdoc/>
-        public override async Task Initialize()
+        public override Task Initialize()
         {
             _assetNames.Clear();
             foreach (var asset in _assetPrefabs)
@@ -71,7 +71,7 @@ namespace CrawfisSoftware.AssetManagement
                 _assetMapping[asset.name] = asset;
                 _assetNames.Add(asset.name);
             }
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
     }
 }
